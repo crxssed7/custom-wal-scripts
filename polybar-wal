@@ -1,9 +1,29 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 source "${HOME}/.cache/wal/colors.sh"
 
-echo "
-color0 = $color0
+if test -f "${HOME}/.config/polybar/colors" ;
+then
+	echo "Do you want to backup your existing colors file? (y/n)"
+	
+	unset backup
+	while [ -z ${backup} ]; do
+		read backup
+	done
+	
+	if [ $backup == "y" ] || [ $backup == "Y" ]
+	then
+		echo "Backup name:"
+		read backupname
+		# Move the file 
+		cp "${HOME}/.config/polybar/colors" "${HOME}/.config/polybar/${backupname}-colorsbkp"
+		echo "Backed up to ${HOME}/.config/polybar/${backupname}-colorsbkp"
+	else
+		echo "File will not be backed up."
+	fi
+fi
+
+printf "color0 = $color0
 color1 = $color1
 color2 = $color2
 color3 = $color3
@@ -18,5 +38,7 @@ color11 = $color11
 color12 = $color12
 color13 = $color13
 color14 = $color14
-color15 = $color15
-"
+color15 = $color15" > "${HOME}/.config/polybar/colors"
+
+echo "-----------------------------"
+echo "Polybar Wal exported to: ${HOME}/.config/polybar/colors"
