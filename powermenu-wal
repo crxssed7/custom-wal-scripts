@@ -2,8 +2,15 @@
 
 source "${HOME}/.cache/wal/colors.sh"
 
-echo "
-* {
+echo "What do you want to call this style?"
+
+unset stylenm
+while [ -z ${stylenm} ]; do
+	read stylenm
+done
+
+echo "Configs for ${stylenm}.rasi"
+echo "* {
     background:                     $color0;
     background-alt:                 $color0;
     foreground:                     $color7;
@@ -11,5 +18,27 @@ echo "
     border-alt:                     $color0;
     selected:                       $color10;
     urgent:                         $color9;
-}
-"
+}"
+
+printf "* {
+    background:                     $color0;
+    background-alt:                 $color0;
+    foreground:                     $color7;
+    border:                         $color0;
+    border-alt:                     $color0;
+    selected:                       $color10;
+    urgent:                         $color9;
+}" > "${HOME}/.config/rofi/powermenu/styles/${stylenm}.rasi"
+
+echo "Applying style to colors.rasi"
+
+printf "/*
+ * Change the colorscheme for every menu simply by editing this file...
+ *
+ * Available Color Schemes
+ *
+ * bluish    berry    nordic    nightly    gotham    mask    faded    cocoa
+ *
+ */
+
+@import \"${stylenm}.rasi\"" > "${HOME}/.config/rofi/powermenu/styles/colors.rasi"
