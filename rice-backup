@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+# A shell script that backups my current setup
+# You will probably need to modify this file for your own system
+
+# Create the backup folder
+echo "What do you want to call this backup?"
+
+unset backupnm
+while [ -z ${backupnm} ]; do
+	read backupnm
+done
+
+# Folders needed 
+# main folder, .config, screenshots
+echo "Creating folders for rice..."
+MAIN_FOLDER="$HOME/rices/.$backupnm/"
+CONFIG_FOLDER="$HOME/rices/.$backupnm/.config"
+mkdir $MAIN_FOLDER
+echo "Created main folder: $MAIN_FOLDER"
+mkdir $CONFIG_FOLDER
+echo "Created config folder: $CONFIG_FOLDER"
+
+# Copy root files
+# .alias, .xinitrc, .zshrc
+echo "Copying root files for rice..."
+cp "$HOME/.alias" "$MAIN_FOLDER.alias"
+cp "$HOME/.xinitrc" "$MAIN_FOLDER.xinitrc"
+cp "$HOME/.zshrc" "$MAIN_FOLDER.zshrc"
+echo "Copied root files"
+
+# Copy application configs
+echo "Copying application config files for rice..."
+cp -r "$HOME/.config/alacritty" "$CONFIG_FOLDER/alacritty"
+cp -r "$HOME/.config/bspwm" "$CONFIG_FOLDER/bspwm"
+cp -r "$HOME/.config/dunst" "$CONFIG_FOLDER/dunst"
+cp -r "$HOME/.config/polybar" "$CONFIG_FOLDER/polybar"
+cp -r "$HOME/.config/rofi" "$CONFIG_FOLDER/rofi"
+cp -r "$HOME/.config/sxhkd" "$CONFIG_FOLDER/sxhkd"
+cp -r "$HOME/.config/picom.conf" "$CONFIG_FOLDER/picom.conf"
+echo "Copied application config files"
